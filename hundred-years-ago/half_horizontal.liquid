@@ -1,0 +1,18 @@
+{% if ok %}
+<div class='layout layout--col layout--top'>
+  <img class='image image-dither w--full' src='{{ image_top }}' alt='{{ paper }}, {{ date_label }}, front page' />
+</div>
+{% else %}
+<div class='layout layout--col layout--center'>
+  <span class='title title--small text--center'>{{ empty_msg }}</span>
+</div>
+{% endif %}
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ hya_icon | base64_encode }}' />
+  {% if ok %}
+  <span class='title'>{{ paper }}</span>
+  <span class='instance'>{{ date_short }} · {{ when_long }}</span>
+  {% else %}
+  <span class='title'>{{ title }}</span>
+  {% endif %}
+</div>

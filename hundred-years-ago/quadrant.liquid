@@ -1,0 +1,13 @@
+{% if ok %}
+<div class='layout layout--col layout--top'>
+  <img class='image image-dither w--full' src='{{ image_top }}' alt='{{ paper }}, {{ date_label }}, front page' />
+</div>
+{% else %}
+<div class='layout layout--col layout--center'>
+  <span class='label text--center'>{{ empty_msg }}</span>
+</div>
+{% endif %}
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ hya_icon | base64_encode }}' />
+  <span class='title'>{% if ok %}{{ date_short }}{% else %}{{ title }}{% endif %}</span>
+</div>
