@@ -1,0 +1,7 @@
+{%- capture virus_icon -%}
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 7V3M12 21v-4M7 12H3M21 12h-4M8.5 8.5 5.6 5.6M18.4 18.4l-2.9-2.9M8.5 15.5l-2.9 2.9M18.4 5.6l-2.9 2.9"/><circle cx="12" cy="3" r="1"/><circle cx="12" cy="21" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="21" cy="12" r="1"/></svg>
+{%- endcapture -%}
+{%- assign title = trmnl.plugin_settings.instance_name | default: "Virology Paper of the Day" -%}
+{%- assign f = featured -%}
+{%- capture empty_msg -%}No new matching papers in the last {{ lookback_days | default: 30 }} days{%- endcapture -%}
+{%- capture basis -%}Newest paper, source rotates daily: {{ source_names }}. Not a ranking.{%- endcapture -%}

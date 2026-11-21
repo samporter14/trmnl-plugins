@@ -1,0 +1,39 @@
+<div class="layout layout--col layout--top layout--stretch-x gap--space-between">
+  {% if f %}
+  <div class="flex flex--col flex--left gap--small lg:gap--medium stretch-x">
+    <div class="flex flex--row flex--center-y gap--small">
+      {% if f.preprint %}<span class="label label--small lg:label--base label--inverted">Preprint · not peer reviewed</span>{% endif %}
+      <span class="label label--small lg:label--base label--gray 1bit:text--black">Newest from {{ featured_source }} · {{ f.when }}{% if rotated_from != blank %} ({{ rotated_from }} had none){% endif %}</span>
+    </div>
+    <span class="title lg:title--large" data-clamp="3">{{ f.title }}</span>
+    <span class="label lg:label--large" data-clamp="1">{{ f.authors }} · {{ f.venue }}</span>
+    {% if f.abstract != blank %}<span class="description lg:description--large" data-clamp="5">{{ f.abstract }}</span>{% endif %}
+  </div>
+  {% if also.size > 0 %}
+  <div class="flex flex--col flex--left gap--xsmall stretch-x">
+    <span class="label label--small lg:label--base label--underline">Also new</span>
+    {% for p in also limit: 4 %}
+    <div class="{% if forloop.index > 2 %}hidden lg:flex {% else %}flex {% endif %}flex--row flex--left flex--center-y gap--small stretch-x">
+      {% if p.preprint %}<span class="label label--small label--inverted">Preprint</span>{% endif %}
+      <span class="label label--small lg:label--base" data-clamp="1">{{ p.title }}</span>
+      <span class="label label--small lg:label--base label--gray 1bit:text--black no-shrink">{{ p.venue }} · {{ p.when }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% else %}
+  <div class="flex flex--col flex--center gap--small stretch">
+    <span class="title lg:title--large">{{ empty_msg }}</span>
+    <span class="description lg:description--large">Checked {{ source_names | default: "no sources" }} via Europe PMC</span>
+  </div>
+  {% endif %}
+  <div class="flex flex--col flex--left stretch-x">
+    {% for e in errors %}<span class="label label--small label--underline">{{ e }}</span>{% endfor %}
+    <span class="label label--small lg:label--base label--gray 1bit:text--black" data-clamp="1">{{ basis }}</span>
+  </div>
+</div>
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ virus_icon | base64_encode }}" />
+  <span class="title">{{ title }}</span>
+  <span class="instance">via Europe PMC</span>
+</div>

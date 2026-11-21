@@ -1,0 +1,40 @@
+<div class='layout layout--row layout--stretch gap--medium'>
+  {% if e %}
+  <div class='flex flex--col flex--center stretch-y w--[320px] no-shrink'>
+    <img class='image image-dither image--contain h--full w--full' src='{{ e.image }}' />
+  </div>
+  <div class='flex flex--col flex--left flex--between stretch-y grow'>
+    <div class='flex flex--col flex--left gap--small stretch-x'>
+      <div class='flex flex--row flex--left flex--center-y gap--small stretch-x'>
+        <span class='value value--small lg:value--base'>{{ e.id }}</span>
+        <span class='label label--small lg:label--base label--gray 1bit:text--black'>Released {{ e.released_full }}</span>
+      </div>
+      <span class='title lg:title--large' data-clamp='3'>{{ e.title | default: 'Details unavailable' }}</span>
+      {% if e.method != blank %}
+      <div class='flex flex--col flex--left gap--xsmall stretch-x'>
+        <div class='flex flex--row flex--left flex--top gap--small stretch-x'><span class='label lg:label--large label--underline w--[86px] no-shrink'>Method</span><span class='description description--large lg:description--xlarge'>{{ e.method }}{% if e.resolution != blank %}, {{ e.resolution }}{% endif %}</span></div>
+        {% if e.assembly != blank or e.weight != blank %}<div class='flex flex--row flex--left flex--top gap--small stretch-x'><span class='label lg:label--large label--underline w--[86px] no-shrink'>Assembly</span><span class='description description--large lg:description--xlarge'>{{ e.assembly }}{% if e.assembly != blank and e.weight != blank %}, {% endif %}{{ e.weight }}</span></div>{% endif %}
+        <div class='flex flex--row flex--left flex--top gap--small stretch-x'><span class='label lg:label--large label--underline w--[86px] no-shrink'>Molecules</span><span class='description description--large lg:description--xlarge' data-clamp='2'>{{ e.molecules }}</span></div>
+        {% if e.organisms != blank %}<div class='flex flex--row flex--left flex--top gap--small stretch-x'><span class='label lg:label--large label--underline w--[86px] no-shrink'>Source</span><span class='description description--large lg:description--xlarge' data-clamp='2'><i>{{ e.organisms }}</i></span></div>{% endif %}
+        <div class='flex flex--row flex--left flex--top gap--small stretch-x'><span class='label lg:label--large label--underline w--[86px] no-shrink'>Paper</span><span class='description description--large lg:description--xlarge' data-clamp='2'>{% if e.published %}{{ e.paper_authors }}, {{ e.paper }}{% else %}To be published ({{ e.authors }}){% endif %}</span></div>
+      </div>
+      {% endif %}
+    </div>
+    <div class='flex flex--col flex--left gap--xsmall stretch-x'>
+      {% if error != blank %}<span class='label label--small label--underline'>{{ error }}</span>{% endif %}
+      {% if motm %}<span class='label label--small lg:label--base' data-clamp='1'>Molecule of the Month: {{ motm.title }}</span>{% endif %}
+      <span class='label label--small lg:label--base label--gray 1bit:text--black'>{{ basis }}</span>
+    </div>
+  </div>
+  {% else %}
+  <div class='flex flex--col flex--center gap--small stretch'>
+    <span class='title lg:title--large'>{{ empty_msg }}</span>
+    {% if motm %}<span class='description description--large lg:description--xlarge'>PDB-101 Molecule of the Month: {{ motm.title }}. {{ motm.subtitle }}</span>{% endif %}
+  </div>
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ pdb_icon | base64_encode }}' />
+  <span class='title'>{{ title }}</span>
+  <span class='instance'>via RCSB PDB</span>
+</div>

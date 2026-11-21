@@ -1,0 +1,15 @@
+{%- assign d = lookback_days | default: 30 | plus: 0 -%}{%- if d < 1 -%}{%- assign d = 30 -%}{%- endif -%}
+{%- assign back = d | times: 86400 -%}{%- assign start = "now" | date: "%s" | minus: back | date: "%Y-%m-%d" -%}{%- assign stop = "now" | date: "%s" | plus: 86400 | date: "%Y-%m-%d" -%}
+{%- assign words = topic_words | default: "virus, viruses, viral, virion, virome, phage, bacteriophage, HIV, SARS-CoV-2" | split: "," -%}
+{%- capture topic -%}({%- for w in words -%}{%- assign ww = w | strip | remove: '"' -%}{%- if ww != blank -%}{%- unless forloop.first %} OR {% endunless -%}TITLE:"{{ ww }}" OR ABSTRACT:"{{ ww }}"{%- endif -%}{%- endfor -%}){%- endcapture -%}
+{%- assign tail = ' AND FIRST_PDATE:[' | append: start | append: ' TO ' | append: stop | append: '] NOT PUB_TYPE:"published erratum" NOT PUB_TYPE:"retraction of publication"' -%}
+{%- assign pre = preprints | default: "bioRxiv" -%}
+{%- if pre == "bioRxiv" -%}{%- capture q -%}SRC:PPR AND PUBLISHER:"bioRxiv" AND {{ topic }}{{ tail }}{%- endcapture %}
+https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=core&pageSize=12&sort=FIRST_PDATE_D%20desc&query={{ q | url_encode }}
+{%- elsif pre == "bioRxiv and medRxiv" -%}{%- capture q -%}SRC:PPR AND (PUBLISHER:"bioRxiv" OR PUBLISHER:"medRxiv") AND {{ topic }}{{ tail }}{%- endcapture %}
+https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=core&pageSize=12&sort=FIRST_PDATE_D%20desc&query={{ q | url_encode }}
+{%- endif -%}
+{%- assign issns = journal_issns | default: "0022-538X, 1553-7366, 2150-7511, 0022-1317, 2057-1577, 1931-3128" | split: "," -%}
+{%- for i in issns limit: 6 -%}{%- assign ii = i | strip | upcase -%}{%- if ii != blank -%}{%- capture q -%}ISSN:"{{ ii }}" AND {{ topic }}{{ tail }}{%- endcapture %}
+https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=core&pageSize=4&sort=FIRST_PDATE_D%20desc&query={{ q | url_encode }}
+{%- endif -%}{%- endfor -%}

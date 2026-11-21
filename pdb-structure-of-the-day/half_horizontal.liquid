@@ -1,0 +1,25 @@
+<div class='layout layout--row layout--stretch gap--medium'>
+  {% if e %}
+  <div class='flex flex--col flex--center stretch-y w--[200px] no-shrink'>
+    <img class='image image-dither image--contain h--full w--full' src='{{ e.image }}' />
+  </div>
+  <div class='flex flex--col flex--left flex--between stretch-y grow'>
+    <div class='flex flex--col flex--left gap--xsmall stretch-x'>
+      <div class='flex flex--row flex--left flex--center-y gap--small stretch-x'>
+        <span class='value value--xsmall lg:value--small'>{{ e.id }}</span>
+        <span class='label label--small lg:label--base label--gray 1bit:text--black'>Released {{ e.released }}</span>
+      </div>
+      <span class='title title--small lg:title--base' data-clamp='2'>{{ e.title | default: 'Details unavailable' }}</span>
+      {% if e.method != blank %}<span class='label label--small lg:label--base'><b>{{ e.method }}</b>{% if e.resolution != blank %} · {{ e.resolution }}{% endif %}{% if e.organisms != blank %} · <i>{{ e.organisms }}</i>{% endif %}</span>{% endif %}
+    </div>
+    <span class='label label--small label--gray 1bit:text--black' data-clamp='1'>{{ basis }}</span>
+  </div>
+  {% else %}
+  <span class='title title--small'>{{ empty_msg }}</span>
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ pdb_icon | base64_encode }}' />
+  <span class='title'>{{ title }}</span>
+  <span class='instance'>via RCSB PDB</span>
+</div>

@@ -1,0 +1,23 @@
+---
+name: Art Forms in Nature
+description: Haeckel's natural history plates
+strategy: static
+static_data: ''
+refresh_interval: 60
+no_screen_padding: 'no'
+dark_mode: 'no'
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: art,nature
+  github_url: https://github.com/samporter14
+  description: 'One plate from Ernst Haeckel''s Kunstformen der Natur (Art Forms in Nature, published in parts 1899–1904), with its plate number, the group it shows and a short natural history note. Ten plates rotate: jellyfish, sea anemones, radiolarians, siphonophores, hummingbirds, orchids, sea squirts, mosses, turtles and lichens. Images are public-domain scans loaded from Wikimedia Commons, dithered for e-ink. Notes are written for this plugin and checked against published sources; they describe the organisms, not the plate itself. No API key or account needed. Unofficial; not affiliated with Wikimedia.'
+- keyname: rotation
+  name: Rotation
+  field_type: select
+  description: Show a new plate every day or every hour.
+  default: daily
+  options:
+  - Daily: daily
+  - Hourly: hourly

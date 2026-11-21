@@ -1,0 +1,8 @@
+{%- capture pdb_icon -%}
+<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6c3 0 3 4 6 4s3-4 6-4 3 4 4 4'/><path d='M4 14c3 0 3 4 6 4s3-4 6-4 3 4 4 4'/><path d='M7 7.5v8M13 8.5v8M17 6.5v8'/></svg>
+{%- endcapture -%}
+{%- assign title = trmnl.plugin_settings.instance_name | default: 'PDB Structure of the Day' -%}
+{%- assign e = entry -%}
+{%- if focus == 'virus' -%}{%- assign scope_short = 'virus entries' -%}{%- else -%}{%- assign scope_short = 'entries' -%}{%- endif -%}
+{%- capture basis -%}One of {{ count }} {{ scope_short }} in this week's PDB release, picked by date. Not a ranking.{%- endcapture -%}
+{%- capture empty_msg -%}No new {{ scope }} in this week's PDB release{%- endcapture -%}

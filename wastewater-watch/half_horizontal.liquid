@@ -1,0 +1,29 @@
+<div class="layout layout--col layout--top layout--stretch-x gap--space-between">
+  {% if ok %}
+  <span class="label label--small lg:label--base" data-clamp="1">Week ending {{ week_short }} · {{ where_line }}</span>
+  <div class="grid grid--cols-3 gap--medium stretch-x">
+    {% for p in pathogens %}
+    <div class="flex flex--col flex--left gap--xsmall">
+      <span class="title title--small lg:title--base">{{ p.name }}</span>
+      {% if p.current %}
+      <span class="value value--xsmall lg:value--large">{{ p.category }}</span>
+      {% if p.level > 0 %}<div class="progress-dots progress-dots--xsmall lg:progress-dots--small"><div class="track">{% for i in (1..5) %}<div class="dot{% if i <= p.level %} dot--filled{% endif %}"></div>{% endfor %}</div></div>{% endif %}
+      <span class="label label--small lg:label--base">WVAL {{ p.wval }}</span>
+      {% elsif p.has_data %}
+      <span class="label label--small">No data this week (last: {{ p.category }}, {{ p.as_of }})</span>
+      {% else %}
+      <span class="label label--small">No data</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <span class="title title--small">{{ error | default: "No data" }}</span>
+  {% endif %}
+  <span class="label label--small label--gray 1bit:text--black" data-clamp="1">{% if note != blank %}{{ note }} {% endif %}Not case counts · {{ credit }}</span>
+</div>
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ ww_icon | base64_encode }}" />
+  <span class="title">{{ title }}</span>
+  <span class="instance">CDC wastewater levels</span>
+</div>

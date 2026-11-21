@@ -1,0 +1,15 @@
+<div class="layout layout--row layout--stretch gap--medium">
+  <div class="flex flex--center stretch-y af-pic af-pic--hh">
+    <img class="image image-dither af-img" src="{{ img }}" alt="{{ p_name }}" />
+  </div>
+  <div class="flex flex--col flex--left gap--small stretch-y af-text">
+    <span class="title lg:title--large">{{ p_name }}</span>
+    <span class="label label--small lg:label--base label--underline">{{ p_common }} · Plate {{ p_num }}</span>
+    <span class="description" data-clamp="3">{{ p_note }}</span>
+  </div>
+</div>
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ leaf_icon | base64_encode }}" />
+  <span class="title">{{ title }}</span>
+  <span class="instance">Haeckel, 1899–1904</span>
+</div>

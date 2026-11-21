@@ -1,0 +1,66 @@
+{%- capture leaf_icon -%}
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round"><path d="M5 19C5 10 11 5 19 5c0 8-5 14-14 14z"/><path d="M5 19 17 7M10 14v-4.5M13 11h3.5"/></svg>
+{%- endcapture -%}
+{%- assign title = trmnl.plugin_settings.instance_name | default: "Art Forms in Nature" -%}
+{%- assign rot_mode = trmnl.plugin_settings.custom_fields_values.rotation | default: "daily" -%}
+{%- assign utc_offset = trmnl.user.utc_offset | default: 0 -%}
+{%- assign now_ts = "now" | date: "%s" | plus: utc_offset -%}
+{%- if rot_mode == "hourly" -%}
+  {%- assign seed = now_ts | divided_by: 3600 -%}
+{%- else -%}
+  {%- assign seed = now_ts | divided_by: 86400 -%}
+{%- endif -%}
+{%- assign idx = seed | modulo: 10 -%}
+{%- case idx -%}
+{%- when 0 -%}
+  {%- assign p_num = 8 -%}{%- assign p_name = "Discomedusae" -%}{%- assign p_common = "Disc jellyfish" -%}
+  {%- assign p_file = "Haeckel_Discomedusae_8.jpg" -%}
+  {%- assign p_note = "The large medusa at the centre is Desmonema annasethe, which Haeckel named after his first wife, Anna Sethe, who died in 1864. Jellyfish bodies are roughly 95% water." -%}
+{%- when 1 -%}
+  {%- assign p_num = 49 -%}{%- assign p_name = "Actiniae" -%}{%- assign p_common = "Sea anemones" -%}
+  {%- assign p_file = "Haeckel_Actiniae.jpg" -%}
+  {%- assign p_note = "Sea anemones are animals named after a flower. Their tentacles carry stinging cells (nematocysts), among the fastest mechanisms in biology: in the related Hydra, discharge takes about 700 nanoseconds." -%}
+{%- when 2 -%}
+  {%- assign p_num = 71 -%}{%- assign p_name = "Stephoidea" -%}{%- assign p_common = "Radiolarians" -%}
+  {%- assign p_file = "Haeckel_Stephoidea_edit.jpg" -%}
+  {%- assign p_note = "Radiolarians are single-celled marine plankton that build intricate skeletons of silica. Where their skeletons pile up on the deep-sea floor they form radiolarian ooze. Haeckel described thousands of species." -%}
+{%- when 3 -%}
+  {%- assign p_num = 17 -%}{%- assign p_name = "Siphonophorae" -%}{%- assign p_common = "Siphonophores" -%}
+  {%- assign p_file = "Haeckel_Siphonophorae.jpg" -%}
+  {%- assign p_note = "A siphonophore is a colony of specialised, genetically identical zooids: some swim, some feed, some sting or reproduce. In many species a gas-filled float keeps the whole colony up." -%}
+{%- when 4 -%}
+  {%- assign p_num = 99 -%}{%- assign p_name = "Trochilidae" -%}{%- assign p_common = "Hummingbirds" -%}
+  {%- assign p_file = "Haeckel_Trochilidae.jpg" -%}
+  {%- assign p_note = "Haeckel drew these from specimens prepared for the hat trade, so the poses are not natural. Hummingbirds can hover and fly backwards, and many save energy on cold nights by entering torpor." -%}
+{%- when 5 -%}
+  {%- assign p_num = 74 -%}{%- assign p_name = "Orchideae" -%}{%- assign p_common = "Orchids" -%}
+  {%- assign p_file = "Haeckel_Orchidae.jpg" -%}
+  {%- assign p_note = "Orchids are one of the largest families of flowering plants. Bee orchids (Ophrys) mimic the look and scent of female insects, so males pollinate them without any nectar reward." -%}
+{%- when 6 -%}
+  {%- assign p_num = 85 -%}{%- assign p_name = "Ascidiae" -%}{%- assign p_common = "Sea squirts" -%}
+  {%- assign p_file = "Haeckel_Ascidiae.jpg" -%}
+  {%- assign p_note = "Sea squirt larvae swim like tadpoles, with a notochord and a dorsal nerve cord. They settle head-first and absorb the tail and much of the larval nervous system. Tunicates are the closest invertebrate relatives of vertebrates." -%}
+{%- when 7 -%}
+  {%- assign p_num = 72 -%}{%- assign p_name = "Muscinae" -%}{%- assign p_common = "Mosses" -%}
+  {%- assign p_file = "Haeckel_Muscinae.jpg" -%}
+  {%- assign p_note = "Many moss leaves are a single cell thick and take up water across their whole surface. In 2014, researchers regrew an Antarctic moss from permafrost that had been frozen for more than 1,500 years." -%}
+{%- when 8 -%}
+  {%- assign p_num = 89 -%}{%- assign p_name = "Chelonia" -%}{%- assign p_common = "Turtles" -%}
+  {%- assign p_file = "Haeckel_Chelonia.jpg" -%}
+  {%- assign p_note = "A turtle's shell is built from broadened ribs and vertebrae fused with bony plates. Its shoulder blades sit inside the rib cage, an arrangement no other living vertebrate has." -%}
+{%- else -%}
+  {%- assign p_num = 83 -%}{%- assign p_name = "Lichenes" -%}{%- assign p_common = "Lichens" -%}
+  {%- assign p_file = "Haeckel_Lichenes.jpg" -%}
+  {%- assign p_note = "A lichen is a partnership between a fungus and green algae or cyanobacteria. Samples of the lichen Xanthoria elegans survived 18 months exposed to space outside the International Space Station." -%}
+{%- endcase -%}
+{%- assign img = "https://commons.wikimedia.org/wiki/Special:FilePath/" | append: p_file | append: "?width=960" -%}
+{%- assign credit = "Ernst Haeckel, Kunstformen der Natur (1899–1904). Public domain, via Wikimedia Commons" -%}
+<style>
+  .af-pic { min-width: 0; min-height: 0; overflow: hidden; }
+  .af-pic--full { flex: 0 0 46%; }
+  .af-pic--hh { flex: 0 0 26%; }
+  .af-pic--hv { flex: 0 0 55%; }
+  .af-pic--q { flex: 1 1 0; }
+  .af-text { flex: 1 1 0; min-width: 0; }
+  .af-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+</style>

@@ -1,0 +1,52 @@
+---
+strategy: polling
+polling_verb: get
+polling_url: (see polling_url.liquid)
+polling_headers:
+polling_body:
+no_screen_padding: 'no'
+dark_mode: 'no'
+refresh_interval_floor: 240
+name: Virology Paper of the Day
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: education
+  description: >-
+    One new virology paper a day, from bioRxiv preprints and peer-reviewed journals (default: J Virol, PLOS Pathogens,
+    mBio, J Gen Virol, Virus Evolution, Cell Host & Microbe). The featured paper is the newest matching paper from one source, and the
+    source rotates each day. It is not a ranking of importance. Preprints are labelled as not peer reviewed.
+    Data from Europe PMC (europepmc.org). Unofficial; not affiliated with Europe PMC, bioRxiv, ASM or PLOS.
+- keyname: preprints
+  field_type: select
+  name: Preprints
+  options:
+  - bioRxiv
+  - bioRxiv and medRxiv
+  - None
+  default: bioRxiv
+  description: Include new preprints. Preprints must mention a topic word in the title.
+- keyname: journal_issns
+  field_type: string
+  name: Journals (ISSN)
+  description: Up to 6 journal ISSNs, separated by commas. Each journal is its own source in the daily rotation.
+  help_text: "Defaults: J Virol 0022-538X, PLOS Pathogens 1553-7366, mBio 2150-7511, J Gen Virol 0022-1317, Virus Evolution 2057-1577, Cell Host & Microbe 1931-3128. Others: Nature Microbiology 2058-5276, npj Viruses 2948-1767. Journals with no matching paper in the look-back window are skipped that day."
+  placeholder: 0022-538X, 1553-7366, 2150-7511, 0022-1317, 2057-1577, 1931-3128
+  default: 0022-538X, 1553-7366, 2150-7511, 0022-1317, 2057-1577, 1931-3128
+- keyname: topic_words
+  field_type: string
+  name: Topic words
+  description: A paper must mention one of these in its title or abstract (preprints, in the title).
+  placeholder: virus, viruses, viral, virion, virome, phage, bacteriophage, HIV, SARS-CoV-2
+  default: virus, viruses, viral, virion, virome, phage, bacteriophage, HIV, SARS-CoV-2
+  optional: true
+- keyname: lookback_days
+  field_type: select
+  name: Look back
+  options:
+  - '7'
+  - '14'
+  - '30'
+  default: '30'
+  description: How far back to look for new papers, in days.

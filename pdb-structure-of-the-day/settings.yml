@@ -1,0 +1,44 @@
+---
+strategy: polling
+polling_verb: get
+polling_url: (see polling_url.liquid)
+no_screen_padding: 'no'
+dark_mode: 'no'
+refresh_interval_floor: 240
+name: PDB Structure of the Day
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: education
+  github_url: https://github.com/samporter14
+  description: >-
+    One structure a day from the latest weekly release of the Protein Data Bank, with RCSB PDB's
+    image of the structure, its title, method, resolution, molecules and source organisms.
+    The entry is chosen by date from that week's new entries; it is not a ranking or an editorial pick.
+    Optionally shows the current PDB-101 Molecule of the Month. Data and images from RCSB PDB (rcsb.org).
+    Unofficial; not affiliated with RCSB PDB or wwPDB.
+- keyname: focus
+  field_type: select
+  name: Structures
+  options:
+  - All new structures
+  - Virus structures only
+  default: All new structures
+  description: '"Virus structures only" keeps entries with at least one molecule from a virus (NCBI taxonomy), including antibody or receptor complexes with a viral protein.'
+- keyname: published_only
+  field_type: select
+  name: Paper
+  options:
+  - Any
+  - Only entries with a published paper
+  default: Any
+  description: Many new entries are released before their paper ("To be published"). Choose the second option to skip those.
+- keyname: show_motm
+  field_type: select
+  name: Molecule of the Month
+  options:
+  - 'Yes'
+  - 'No'
+  default: 'Yes'
+  description: Show the title of the current PDB-101 Molecule of the Month on the full screen.

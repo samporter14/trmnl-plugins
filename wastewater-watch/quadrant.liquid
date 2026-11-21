@@ -1,0 +1,18 @@
+<div class="layout layout--col layout--top layout--stretch-x gap--space-between">
+  {% if ok %}
+  <span class="label label--small lg:label--base" data-clamp="1">Week ending {{ week_short }} · site {{ site.id }}</span>
+  {% for p in pathogens %}
+  <div class="flex flex--row flex--between flex--center-y stretch-x">
+    <span class="label lg:label--large">{{ p.name }}</span>
+    <span class="title title--small lg:title--base">{% if p.current %}{{ p.category }}{% else %}No data{% endif %}</span>
+  </div>
+  {% endfor %}
+  {% else %}
+  <span class="title title--small">{{ error | default: "No data" }}</span>
+  {% endif %}
+  <span class="label label--small label--gray 1bit:text--black" data-clamp="1">{% if stale %}Data {{ days_old }} days old · {% endif %}Not case counts · CDC</span>
+</div>
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ ww_icon | base64_encode }}" />
+  <span class="title">{{ title }}</span>
+</div>

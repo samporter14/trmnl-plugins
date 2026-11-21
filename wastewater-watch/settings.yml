@@ -1,0 +1,106 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 3.4.6
+serverless_language: node
+refresh_interval_floor: '240'
+polling_url: |-
+  {%- assign c = county | default: "Washtenaw" | strip | remove: " County" | remove: " county" | remove: " Parish" | remove: " Borough" | replace: "'", "''" -%}
+  {%- assign st = state | default: "Michigan" | strip | replace: "'", "''" -%}
+  {%- assign since = "now" | date: "%s" | minus: 6048000 | date: "%Y-%m-%d" -%}
+  {%- capture w -%}upper(state_territory)=upper('{{ st }}') AND upper(counties_served) like upper('%{{ c }}%') AND week_end >= '{{ since }}'{%- endcapture -%}
+  https://data.cdc.gov/resource/atcp-73re.json?$select=site,counties_served,population_served,source,site_wval,site_wval_category,week_end,pathogen_target,date_updated&$order=week_end%20DESC&$limit=1000&$where={{ w | url_encode }}
+polling_headers:
+polling_body:
+oauth_enabled: 'false'
+oauth_pkce_enabled: 'no'
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: education
+  github_url: https://github.com/samporter14
+  description: >-
+    Weekly SARS-CoV-2, influenza A and RSV levels in wastewater from one sewage treatment site near you,
+    straight from CDC's National Wastewater Surveillance System (data.cdc.gov). Shows CDC's own Wastewater
+    Viral Activity Level (WVAL) and category (Very Low to Very High), the data week, the population the site
+    serves, and the last 8 weeks. WVAL compares virus levels with the site's own low baseline over the past
+    2 years; it is not a count of cases. Values are shown exactly as CDC publishes them. CDC posts new data
+    on Fridays. Unofficial; not affiliated with CDC.
+- keyname: state
+  field_type: select
+  name: State or territory
+  options:
+  - Alabama
+  - Alaska
+  - Arizona
+  - Arkansas
+  - California
+  - Colorado
+  - Connecticut
+  - Delaware
+  - District of Columbia
+  - Florida
+  - Georgia
+  - Guam
+  - Hawaii
+  - Idaho
+  - Illinois
+  - Indiana
+  - Iowa
+  - Kansas
+  - Kentucky
+  - Louisiana
+  - Maine
+  - Maryland
+  - Massachusetts
+  - Michigan
+  - Minnesota
+  - Mississippi
+  - Missouri
+  - Montana
+  - Nebraska
+  - Nevada
+  - New Hampshire
+  - New Jersey
+  - New Mexico
+  - New York
+  - North Carolina
+  - North Dakota
+  - Ohio
+  - Oklahoma
+  - Oregon
+  - Pennsylvania
+  - Puerto Rico
+  - Rhode Island
+  - South Carolina
+  - South Dakota
+  - Tennessee
+  - Texas
+  - 'U.S. Virgin Islands'
+  - Utah
+  - Vermont
+  - Virginia
+  - Washington
+  - West Virginia
+  - Wisconsin
+  - Wyoming
+  default: Michigan
+- keyname: county
+  field_type: string
+  name: County
+  description: The county the treatment site serves, e.g. Washtenaw.
+  placeholder: Washtenaw
+  default: Washtenaw
+- keyname: site_id
+  field_type: string
+  name: Site number (optional)
+  description: CDC numbers each site anonymously. Leave blank to use the site with the newest data that serves the most people. The screen lists the other site numbers in your county.
+  placeholder: '954'
+  optional: true
+name: Wastewater Watch
+description: COVID, flu A, RSV in wastewater
+refresh_interval: 720

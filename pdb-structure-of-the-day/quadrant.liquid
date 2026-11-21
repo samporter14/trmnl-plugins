@@ -1,0 +1,18 @@
+<div class='layout layout--row layout--stretch gap--small'>
+  {% if e %}
+  <div class='flex flex--col flex--center stretch-y w--[150px] no-shrink'>
+    <img class='image image-dither image--contain h--full w--full' src='{{ e.image }}' />
+  </div>
+  <div class='flex flex--col flex--left gap--xsmall stretch-y grow'>
+    <span class='value value--xsmall'>{{ e.id }}</span>
+    <span class='title title--small' data-clamp='4'>{{ e.title | default: 'Details unavailable' }}</span>
+    {% if e.method != blank %}<span class='label label--small'>{{ e.method }}{% if e.resolution != blank %} · {{ e.resolution }}{% endif %}</span>{% endif %}
+  </div>
+  {% else %}
+  <span class='title title--small'>{{ empty_msg }}</span>
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ pdb_icon | base64_encode }}' />
+  <span class='title'>{{ title }}</span>
+</div>

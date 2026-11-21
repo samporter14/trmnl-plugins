@@ -1,0 +1,11 @@
+{%- capture bus_icon -%}
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="15" rx="2"/><path d="M4 11h16"/><path d="M8 18v3"/><path d="M16 18v3"/><circle cx="8" cy="14.5" r="0.5"/><circle cx="16" cy="14.5" r="0.5"/></svg>
+{%- endcapture -%}
+{%- assign legend = "Transit scheduling, geographic, and real-time data provided by permission of AAATA/TheRide" -%}
+{%- comment -%} Show stops in the order the installer typed them; fall back to feed order. {%- endcomment -%}
+{%- assign wanted_ids = trmnl.plugin_settings.custom_fields_values.stop_ids | default: "" | remove: " " | split: "," -%}
+{%- if wanted_ids.size == 0 and stops -%}{%- assign wanted_ids = stops | map: "id" -%}{%- endif -%}
+{%- assign stop_count = wanted_ids.size -%}
+{%- assign title = trmnl.plugin_settings.instance_name | default: "Bus Arrivals" -%}
+{%- comment -%} Taller screens (TRMNL X) have room for a third route per stop on the full view. {%- endcomment -%}
+{%- assign full_routes = 2 -%}{%- if trmnl.device.height > 600 -%}{%- assign full_routes = 3 -%}{%- endif -%}
