@@ -11,7 +11,8 @@
   <img class='image' src='data:image/svg+xml;base64,{{ hya_icon | base64_encode }}' />
   {% if ok %}
   <span class='title'>{{ paper }}</span>
-  <span class='instance'>{{ date_short }} · {{ when_long }}</span>
+  <span class='instance portrait:hidden'>{{ date_short }} · {{ when_long }}</span>
+  <span class='instance hidden portrait:block'>{{ date_short }} · {{ when_short }}</span>
   {% else %}
   <span class='title'>{{ title }}</span>
   {% endif %}

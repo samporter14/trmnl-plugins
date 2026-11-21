@@ -1,6 +1,9 @@
 {% if ok %}
-<div class='layout layout--col layout--top'>
+<div class='layout layout--col layout--top portrait:hidden'>
   <img class='image image-dither w--full' src='{{ image_top }}' alt='{{ paper }}, {{ date_label }}, front page' />
+</div>
+<div class='layout layout--col layout--center hidden portrait:flex'>
+  <img class='image image-dither image--contain w--full h--full' src='{{ image_page }}' alt='{{ paper }}, {{ date_label }}, front page' />
 </div>
 {% else %}
 <div class='layout layout--col layout--center'>
