@@ -2,14 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round"><path d="M5 19C5 10 11 5 19 5c0 8-5 14-14 14z"/><path d="M5 19 17 7M10 14v-4.5M13 11h3.5"/></svg>
 {%- endcapture -%}
 {%- assign title = trmnl.plugin_settings.instance_name | default: "Art Forms in Nature" -%}
-{%- assign rot_mode = trmnl.plugin_settings.custom_fields_values.rotation | default: "daily" -%}
 {%- assign utc_offset = trmnl.user.utc_offset | default: 0 -%}
 {%- assign now_ts = "now" | date: "%s" | plus: utc_offset -%}
-{%- if rot_mode == "hourly" -%}
-  {%- assign seed = now_ts | divided_by: 3600 -%}
-{%- else -%}
-  {%- assign seed = now_ts | divided_by: 86400 -%}
-{%- endif -%}
+{%- assign seed = now_ts | divided_by: 86400 -%}
 {%- assign idx = seed | modulo: 10 -%}
 {%- case idx -%}
 {%- when 0 -%}
@@ -58,6 +53,7 @@
 <style>
   .af-pic { min-width: 0; min-height: 0; overflow: hidden; }
   .af-pic--full { flex: 0 0 46%; }
+  .screen--portrait .af-pic--full { flex: 0 0 58%; }
   .af-pic--hh { flex: 0 0 26%; }
   .af-pic--hv { flex: 0 0 55%; }
   .af-pic--q { flex: 1 1 0; }

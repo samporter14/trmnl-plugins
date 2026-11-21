@@ -1,11 +1,11 @@
 <div class="layout layout--col layout--stretch gap--small">
-  <div class="flex flex--center stretch-x af-pic af-pic--hv">
+  <div class="flex flex--center flex--center-x stretch-x af-pic af-pic--hv">
     <img class="image image-dither af-img" src="{{ img }}" alt="{{ p_name }}" />
   </div>
   <div class="flex flex--col flex--left gap--xsmall stretch-x">
-    <span class="title title--small lg:title--base">{{ p_name }}</span>
+    <span class="title title--small lg:title--large">{{ p_name }}</span>
     <span class="label label--small lg:label--base label--underline">{{ p_common }} · Plate {{ p_num }}</span>
-    <span class="description" data-clamp="4">{{ p_note }}</span>
+    <span class="description lg:description--xlarge" data-clamp="4" data-clamp-lg="6" data-clamp-lg-portrait="8">{{ p_note }}</span>
   </div>
 </div>
 <div class="title_bar">

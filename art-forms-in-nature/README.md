@@ -1,14 +1,16 @@
 # Art Forms in Nature
 
-One plate from Ernst Haeckel's *Kunstformen der Natur* (Art Forms in Nature, published in parts 1899 to 1904), with its plate number, the group it shows and a short natural history note. Ten plates rotate: jellyfish, sea anemones, radiolarians, siphonophores, hummingbirds, orchids, sea squirts, mosses, turtles and lichens.
+One plate from Ernst Haeckel's *Kunstformen der Natur* (Art Forms in Nature, published in parts 1899 to 1904), with its plate number, the group it shows and a short natural history note. A new plate each day, cycling through ten: jellyfish, sea anemones, radiolarians, siphonophores, hummingbirds, orchids, sea squirts, mosses, turtles and lichens.
 
-![TRMNL X full screen](previews/trmnl-x-full.png)
+![TRMNL X previews: full, half horizontal, half vertical and quadrant](previews/trmnl-x-landscape.png)
 
-## Settings
-- **Rotation**: a new plate every day (default) or every hour.
+Portrait (TRMNL X), rendered locally with the TRMNL framework CSS because the preview API only renders landscape:
+
+![TRMNL X portrait mock](previews/trmnl-x-portrait-mock.png)
 
 ## How it works
 - A static plugin: no polling, key or account. The plate list lives in `shared.liquid`.
+- The plate is picked by day number in your time zone (`trmnl.user.utc_offset`), so it changes at local midnight and every size shows the same plate. There are no settings.
 - Images are public-domain scans loaded from Wikimedia Commons through `Special:FilePath`, and TRMNL dithers them for e-ink.
 - Plate numbers were checked against each Commons file page. Haeckel's plates carry no scale, so none is shown.
 
