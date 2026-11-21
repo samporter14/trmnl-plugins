@@ -2,9 +2,11 @@
 
 The front page of a newspaper printed 100 years ago today, from [Chronicling America](https://www.loc.gov/collections/chronicling-america/) at the Library of Congress. Landscape layouts show the masthead and top headlines; the half vertical layout shows the whole page.
 
-![TRMNL OG layouts, local mock-up](previews/og-plus-all-1926-11-21-local.png)
+![Every layout on the TRMNL OG, landscape (top) and portrait (bottom)](previews/og-all-layouts-landscape-portrait-local.png)
 
-Previews are local mock-ups (4-gray dither), not TRMNL renders.
+![Every layout on the TRMNL X, landscape (top) and portrait (bottom)](previews/x-all-layouts-landscape-portrait-local.png)
+
+Previews are local mock-ups made with the TRMNL framework CSS, not TRMNL renders. In portrait, the full and quadrant layouts show the whole page instead of the top of it.
 
 ## Settings
 - **Newspaper**: one of nine dailies with scans for most days of 1926-1931. Default: *South Bend News-Times* (South Bend, Ind.). Chronicling America has no digitized Michigan papers for 1926 apart from one Finnish-language weekly, so the default is the nearest daily just over the Michigan line.
