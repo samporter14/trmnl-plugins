@@ -7,5 +7,4 @@
 {%- if wanted_ids.size == 0 and stops -%}{%- assign wanted_ids = stops | map: "id" -%}{%- endif -%}
 {%- assign stop_count = wanted_ids.size -%}
 {%- assign title = trmnl.plugin_settings.instance_name | default: "Bus Arrivals" -%}
-{%- comment -%} Taller screens (TRMNL X) have room for a third route per stop on the full view. {%- endcomment -%}
-{%- assign full_routes = 2 -%}{%- if trmnl.device.height > 600 -%}{%- assign full_routes = 3 -%}{%- endif -%}
+{%- comment -%} Views list up to 3 routes per stop; the third row is hidden below the lg breakpoint (TRMNL OG) with `hidden lg:flex`. {%- endcomment -%}

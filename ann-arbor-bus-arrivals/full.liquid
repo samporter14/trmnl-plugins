@@ -2,7 +2,7 @@
   {% if error != blank and stops.size == 0 %}
   <div class="flex flex--col flex--center stretch"><span class="title">{{ error }}</span></div>
   {% elsif stop_count <= 2 %}
-  <div class="grid grid--cols-{% if stop_count <= 1 %}1{% else %}2{% endif %} gap--xlarge">
+  <div class="grid grid--cols-{% if stop_count <= 1 %}1{% else %}2 lg:portrait:grid--cols-1{% endif %} gap--xlarge">
     {% for sid in wanted_ids limit: 2 %}{% assign stop = stops | where: "id", sid | first %}
     <div class="flex flex--col flex--left flex--top gap--medium">
       <div class="flex flex--col flex--left stretch-x">
@@ -13,14 +13,14 @@
       {% if stop == nil or stop.routes.size == 0 %}
       <span class="description lg:description--large">{{ stop.note | default: "No buses predicted right now" }}</span>
       {% endif %}
-      {% for r in stop.routes limit: full_routes %}
-      <div class="flex flex--col flex--left gap--xsmall">
+      {% for r in stop.routes limit: 3 %}
+      <div class="{% if forloop.index == 3 %}hidden lg:flex{% else %}flex{% endif %} flex--col flex--left gap--xsmall">
         <div class="flex flex--row flex--center-y gap--small">
           <span class="label label--filled lg:label--large">{{ r.route }}</span>
           <span class="label lg:label--large" data-clamp="1">{{ r.dest }}</span>
         </div>
         <div class="flex flex--row flex--wrap flex--bottom gap--medium">
-          <span class="value value--large lg:value--xxlarge value--tnums">{{ r.times[0] }}</span>
+          <span class="value value--large lg:value--xxlarge lg:portrait:value--large value--tnums">{{ r.times[0] }}</span>
           {% for t in r.times offset: 1 %}<span class="value value--small lg:value--base value--tnums">{{ t }}</span>{% endfor %}
         </div>
       </div>
@@ -39,8 +39,8 @@
       {% if stop == nil or stop.routes.size == 0 %}
       <span class="label label--gray 1bit:text--black">{{ stop.note | default: "No buses predicted right now" }}</span>
       {% endif %}
-      {% for r in stop.routes limit: full_routes %}
-      <div class="flex flex--row flex--center-y gap--small">
+      {% for r in stop.routes limit: 3 %}
+      <div class="{% if forloop.index == 3 %}hidden lg:flex{% else %}flex{% endif %} flex--row flex--center-y gap--small">
         <span class="label label--filled lg:label--large">{{ r.route }}</span>
         <span class="value value--small lg:value--base value--tnums">{{ r.times[0] }}</span>
         {% if r.times.size > 1 %}<span class="label label--gray 1bit:text--black lg:label--large">{% for t in r.times offset: 1 %}{{ t }}{% unless forloop.last %}, {% endunless %}{% endfor %}</span>{% endif %}
