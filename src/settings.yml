@@ -1,0 +1,31 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 3.4.6
+serverless_language: node
+refresh_interval_floor: '15'
+polling_url: https://www.theride.org/api/ServiceData?method=getpredictionsfromxml&stpid={{ stop_ids }}
+polling_headers: ''
+polling_body: ''
+id: 540490
+oauth_enabled: 'false'
+oauth_pkce_enabled: 'no'
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: travel
+  github_url: https://github.com/samporter14
+  description: Real-time bus arrival predictions for Ann Arbor / Ypsilanti (AAATA, TheRide). Enter one to four stop IDs to see the next buses on each route serving those stops, shown as clock times with the time the prediction was made. Unofficial; not affiliated with or endorsed by AAATA. Transit scheduling, geographic, and real-time data provided by permission of AAATA/TheRide.
+- keyname: stop_ids
+  field_type: string
+  name: Stop IDs
+  description: One to four TheRide stop numbers, separated by commas. Shown in this order.
+  help_text: Use the stop number TheRide uses for real-time arrivals (the GTFS stop_code, which is not the same as stop_id). Example 1285, 1776 is Geddes + CCTC in both directions. The full screen shows up to 4 stops; half screens and quadrants show 2.
+  placeholder: 1285, 1776
+name: Ann Arbor Bus Arrivals
+description: Ann Arbor TheRide bus arrivals
+refresh_interval: 15
