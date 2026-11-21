@@ -25,7 +25,7 @@ Previews are local mock-ups (4-gray dither), not TRMNL renders.
 - loc.gov's search API refuses requests from TRMNL's servers (HTTP 403), but page images on tile.loc.gov load fine. So `index/<lccn>/<year>.json` maps each issue date to the IIIF image service of that issue's front page and the page's width/height ratio. `build_index.py` made these files from the loc.gov API, one request per paper per year.
 - TRMNL polls this year's index file from this repository (`polling_url.liquid`). `transform.js` works out today's date in your time zone minus 100 years, picks that day's issue, and builds IIIF crops of the front page.
 - No issue that day (no Sunday edition, or a gap in the scans)? It shows the nearest issue and labels it "Nearest issue to <date>". Near New Year it also checks the neighbouring year's file.
-- The index covers 1926-1931. After 2031 it will show the nearest indexed issue, labelled with how far off it is, until the index is extended.
+- The index covers 1926-1931, so it works until the end of 2031. To go further, run `build_index.py` for more years that Chronicling America has scans for.
 
 ## What's on screen
 The page is the original scan, cropped but not edited. The paper's name, place and issue date come from the Library of Congress record; the weekday is calculated from the date. Nothing is summarised or rewritten.
