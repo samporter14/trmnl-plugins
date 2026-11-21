@@ -1,8 +1,8 @@
 <div class="layout layout--col layout--stretch gap--xsmall">
-  <div class="flex flex--center stretch-x af-pic af-pic--q">
+  <div class="flex flex--center flex--center-x stretch-x af-pic af-pic--q">
     <img class="image image-dither af-img" src="{{ img }}" alt="{{ p_name }}" />
   </div>
-  <span class="label label--small">{{ p_name }} · Plate {{ p_num }}</span>
+  <span class="label label--small lg:label--base grow-0">{{ p_name }} · Plate {{ p_num }}</span>
 </div>
 <div class="title_bar">
   <img class="image" src="data:image/svg+xml;base64,{{ leaf_icon | base64_encode }}" />
