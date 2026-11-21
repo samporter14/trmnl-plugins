@@ -40,6 +40,7 @@ function dayNum(d) {
   var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || "");
   return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 86400000) : NaN;
 }
+function isoDay(n) { return new Date(n * 86400000).toISOString().slice(0, 10); }
 function siteNum(s) { return String(s || "").replace(/^ID:\s*/i, "").trim(); }
 function popFull(p) {
   var n = Math.round(parseFloat(p));
@@ -77,9 +78,10 @@ function transform(input) {
   input = input || {};
   var f = fields(input);
   var county = String(f.county || "Washtenaw").trim();
-  var state = titleCase(String(f.state || "Michigan").trim());
+  var state = titleCase(String(f.state || "Michigan").replace(/_/g, " ").trim());
   var wantSite = siteNum(f.site_id || "");
-  var place = county + (/\b(county|parish|borough)$/i.test(county) ? "" : " County") + ", " + state;
+  var place = county.toLowerCase() === state.toLowerCase() ? state :
+    county + (/\b(county|parish|borough)$/i.test(county) ? "" : " County") + ", " + state;
 
   var t = input.trmnl || {};
   var offset = parseInt((t.user && t.user.utc_offset) || 0, 10) || 0;   // seconds
@@ -138,9 +140,15 @@ function transform(input) {
     var cat = cur ? String(cur.site_wval_category || "").trim() : "";
     var level = LADDER.indexOf(cat.toLowerCase()) + 1;   // 0 = not one of the five levels
     var prev = pr[1] || null;
-    var hist = pr.slice(0, HISTORY_WEEKS).reverse()
-      .filter(function (r) { return r.site_wval !== undefined && r.site_wval !== null && r.site_wval !== ""; })
-      .map(function (r) { return [pretty(r.week_end, false), parseFloat(r.site_wval)]; });
+    // Fixed 8-week calendar window ending at the site's newest week; a week CDC has no value for stays null (an empty slot).
+    var hist = [];
+    for (var k = HISTORY_WEEKS - 1; k >= 0; k--) {
+      var d = isoDay(dayNum(week) - 7 * k), hit = null;
+      pr.forEach(function (r) { if (String(r.week_end).slice(0, 10) === d) hit = r; });
+      var v = hit && hit.site_wval !== undefined && hit.site_wval !== null && hit.site_wval !== "" ? parseFloat(hit.site_wval) : null;
+      hist.push([pretty(d, false), v]);
+    }
+    if (!hist.some(function (h) { return h[1] !== null; })) hist = [];
     out.pathogens.push({
       name: p.name, disease: p.disease,
       has_data: !!cur,
@@ -156,7 +164,7 @@ function transform(input) {
   });
   // One y-axis range for all three history charts.
   var hmax = 0;
-  out.pathogens.forEach(function (p) { p.hist.forEach(function (h) { if (h[1] > hmax) hmax = h[1]; }); });
+  out.pathogens.forEach(function (p) { p.hist.forEach(function (h) { if (h[1] !== null && h[1] > hmax) hmax = h[1]; }); });
   out.hist_max = Math.ceil(hmax || 1);
   out.ok = true;
   return out;

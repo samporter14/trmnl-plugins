@@ -12,7 +12,7 @@
     <div class="flex flex--col flex--left gap--xsmall">
       <span class="title title--small lg:title--base">{{ p.name }}{% if p.disease != blank %} <span class="label label--small lg:label--base label--gray 1bit:text--black">{{ p.disease }}</span>{% endif %}</span>
       {% if p.current %}
-      <span class="value value--small lg:value--xlarge">{{ p.category }}</span>
+      <span class="value value--small lg:value--xlarge lg:portrait:value--large">{{ p.category }}</span>
       {% if p.level > 0 %}<div class="progress-dots progress-dots--small"><div class="track">{% for i in (1..5) %}<div class="dot{% if i <= p.level %} dot--filled{% endif %}"></div>{% endfor %}</div></div>{% endif %}
       <span class="label label--small lg:label--base">WVAL {{ p.wval }}{% if p.prev != blank %} · {{ p.prev_week }}: {{ p.prev }}{% endif %}</span>
       {% elsif p.has_data %}
@@ -21,7 +21,7 @@
       {% else %}
       <span class="value value--xsmall lg:value--base">No data</span>
       {% endif %}
-      {% if p.hist.size > 1 %}<div id="ww-chart-{{ forloop.index }}" class="w--full h--24 lg:h--64"></div>{% endif %}
+      {% if p.hist.size > 1 %}<div id="ww-chart-{{ forloop.index }}" class="w--full h--24 lg:h--64 lg:portrait:h--96"></div>{% endif %}
     </div>
     {% endfor %}
   </div>
@@ -33,7 +33,7 @@
   {% endif %}
   <div class="flex flex--col flex--left stretch-x">
     {% if note != blank %}<span class="label label--small lg:label--base label--underline" data-clamp="1">{{ note }}</span>{% endif %}
-    {% if ok %}<span class="label label--small lg:label--base label--gray 1bit:text--black" data-clamp="1">{% assign h0 = pathogens.first.hist %}Bars: weekly WVAL, {{ h0.first.first }} to {{ h0.last.first }}. {{ caveat }}</span>{% endif %}
+    {% if ok %}<span class="label label--small lg:label--base label--gray 1bit:text--black" data-clamp="1" data-clamp-lg="2">{% assign h0 = pathogens.first.hist %}Bars: weekly WVAL, {{ h0.first.first }} to {{ h0.last.first }}. {{ caveat }}</span>{% endif %}
     <span class="label label--small lg:label--base label--gray 1bit:text--black" data-clamp="1">{{ credit }}{% if other_sites != blank %} · Other site{% if site_count > 2 %}s{% endif %} here: {{ other_sites }}{% endif %}</span>
   </div>
 </div>

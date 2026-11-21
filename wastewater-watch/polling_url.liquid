@@ -1,5 +1,5 @@
 {%- assign c = county | default: "Washtenaw" | strip | remove: " County" | remove: " county" | remove: " Parish" | remove: " Borough" | replace: "'", "''" -%}
-{%- assign st = state | default: "Michigan" | strip | replace: "'", "''" -%}
+{%- assign st = state | default: "Michigan" | replace: "_", " " | strip | replace: "'", "''" -%}
 {%- assign since = "now" | date: "%s" | minus: 6048000 | date: "%Y-%m-%d" -%}
 {%- capture w -%}upper(state_territory)=upper('{{ st }}') AND upper(counties_served) like upper('%{{ c }}%') AND week_end >= '{{ since }}'{%- endcapture -%}
 https://data.cdc.gov/resource/atcp-73re.json?$select=site,counties_served,population_served,source,site_wval,site_wval_category,week_end,pathogen_target,date_updated&$order=week_end%20DESC&$limit=1000&$where={{ w | url_encode }}

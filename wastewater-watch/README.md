@@ -2,15 +2,17 @@
 
 Weekly SARS-CoV-2, influenza A and RSV levels in wastewater from one sewage treatment site, from CDC's National Wastewater Surveillance System (NWSS). Shows CDC's Wastewater Viral Activity Level (WVAL) and category (Very Low to Very High), the data week, the population the site serves, and the last 8 weeks.
 
-![TRMNL OG full screen](previews/og-plus-full.png)
+![TRMNL X full screen](previews/trmnl-x-full.png)
+
+More previews: [TRMNL OG](previews/og-plus-full.png), [TRMNL X portrait](previews/trmnl-x-portrait-full.png).
 
 ## Settings
-- **State or territory** and **County**: where to look for treatment sites.
+- **State or territory** and **County**: where to look for treatment sites. Use the county name without "County". For DC, set both to District of Columbia.
 - **Site number** (optional): CDC numbers sites anonymously. Leave blank to use the site with the newest data that serves the most people. The screen lists the other site numbers in your county.
 
 ## How it works
 - TRMNL polls the keyless Socrata dataset [`atcp-73re`](https://data.cdc.gov/resource/atcp-73re.json) on data.cdc.gov. There's no server or cron job.
-- `transform.js` (serverless Node) picks the site, then builds the current levels and the 8-week history.
+- `transform.js` (serverless Node) picks the site, then builds the current levels and the 8-week history. The history is a fixed 8-week window, so a week CDC didn't report shows as an empty bar slot rather than being skipped.
 - CDC updates the dataset on Fridays, and `week_end` is a Saturday. Refresh floor is 240 minutes.
 
 ## What the numbers mean
