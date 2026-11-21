@@ -4,4 +4,5 @@
 {%- assign title = trmnl.plugin_settings.instance_name | default: "Virology Paper of the Day" -%}
 {%- assign f = featured -%}
 {%- capture empty_msg -%}No new matching papers in the last {{ lookback_days | default: 30 }} days{%- endcapture -%}
+{%- capture fail_msg -%}Europe PMC did not respond. Trying again at the next refresh.{%- endcapture -%}
 {%- capture basis -%}Newest paper, source rotates daily: {{ source_names }}. Not a ranking.{%- endcapture -%}

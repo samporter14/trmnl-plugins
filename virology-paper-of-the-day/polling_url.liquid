@@ -3,10 +3,10 @@
 {%- assign words = topic_words | default: "virus, viruses, viral, virion, virome, phage, bacteriophage, HIV, SARS-CoV-2" | split: "," -%}
 {%- capture topic -%}({%- for w in words -%}{%- assign ww = w | strip | remove: '"' -%}{%- if ww != blank -%}{%- unless forloop.first %} OR {% endunless -%}TITLE:"{{ ww }}" OR ABSTRACT:"{{ ww }}"{%- endif -%}{%- endfor -%}){%- endcapture -%}
 {%- assign tail = ' AND FIRST_PDATE:[' | append: start | append: ' TO ' | append: stop | append: '] NOT PUB_TYPE:"published erratum" NOT PUB_TYPE:"retraction of publication"' -%}
-{%- assign pre = preprints | default: "bioRxiv" -%}
-{%- if pre == "bioRxiv" -%}{%- capture q -%}SRC:PPR AND PUBLISHER:"bioRxiv" AND {{ topic }}{{ tail }}{%- endcapture %}
+{%- assign pre = preprints | default: "biorxiv" | downcase | replace: "_", " " | strip -%}{%- if pre contains "medrxiv" -%}{%- assign pre = "biorxiv_medrxiv" -%}{%- elsif pre == "biorxiv" -%}{%- assign pre = "biorxiv" -%}{%- else -%}{%- assign pre = "none" -%}{%- endif -%}
+{%- if pre == "biorxiv" -%}{%- capture q -%}SRC:PPR AND PUBLISHER:"bioRxiv" AND {{ topic }}{{ tail }}{%- endcapture %}
 https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=core&pageSize=12&sort=FIRST_PDATE_D%20desc&query={{ q | url_encode }}
-{%- elsif pre == "bioRxiv and medRxiv" -%}{%- capture q -%}SRC:PPR AND (PUBLISHER:"bioRxiv" OR PUBLISHER:"medRxiv") AND {{ topic }}{{ tail }}{%- endcapture %}
+{%- elsif pre == "biorxiv_medrxiv" -%}{%- capture q -%}SRC:PPR AND (PUBLISHER:"bioRxiv" OR PUBLISHER:"medRxiv") AND {{ topic }}{{ tail }}{%- endcapture %}
 https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=core&pageSize=12&sort=FIRST_PDATE_D%20desc&query={{ q | url_encode }}
 {%- endif -%}
 {%- assign issns = journal_issns | default: "0022-538X, 1553-7366, 2150-7511, 0022-1317, 2057-1577, 1931-3128" | split: "," -%}

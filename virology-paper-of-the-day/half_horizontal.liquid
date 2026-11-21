@@ -5,12 +5,12 @@
       {% if f.preprint %}<span class="label label--small label--inverted">Preprint · not peer reviewed</span>{% endif %}
       <span class="label label--small lg:label--base label--gray 1bit:text--black">Newest from {{ featured_source }} · {{ f.when }}</span>
     </div>
-    <span class="title title--small lg:title--base" data-clamp="2">{{ f.title }}</span>
+    <span class="title title--small lg:title--large" data-clamp="2">{{ f.title }}</span>
     <span class="label label--small lg:label--base" data-clamp="1">{{ f.authors }} · {{ f.venue }}</span>
-    {% if f.abstract != blank %}<span class="description hidden lg:block" data-clamp="2">{{ f.abstract }}</span>{% endif %}
+    {% if f.abstract != blank %}<span class="description lg:description--xlarge hidden lg:block" data-clamp="2" data-clamp-lg-portrait="5">{{ f.abstract }}</span>{% endif %}
   </div>
   {% else %}
-  <span class="title title--small">{{ empty_msg }}</span>
+  <span class="title title--small lg:title--large">{% if all_failed %}{{ fail_msg }}{% else %}{{ empty_msg }}{% endif %}</span>
   {% endif %}
   <span class="label label--small label--gray 1bit:text--black" data-clamp="1">{{ basis }}</span>
 </div>

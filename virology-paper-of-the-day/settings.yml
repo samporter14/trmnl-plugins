@@ -22,10 +22,10 @@ custom_fields:
   field_type: select
   name: Preprints
   options:
-  - bioRxiv
-  - bioRxiv and medRxiv
-  - None
-  default: bioRxiv
+  - 'bioRxiv': biorxiv
+  - 'bioRxiv and medRxiv': biorxiv_medrxiv
+  - 'None': none
+  default: biorxiv
   description: Include new preprints. Preprints must mention a topic word in the title.
 - keyname: journal_issns
   field_type: string
