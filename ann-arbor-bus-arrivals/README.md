@@ -5,7 +5,7 @@ Real-time bus arrival predictions for up to four AAATA (TheRide) stops in Ann Ar
 ![TRMNL X full screen](previews/trmnl-x-full.png)
 
 ## Settings
-- **Stop IDs**: one to four TheRide stop numbers, separated by commas (for example `1285, 1776`). Use the stop number TheRide shows for real-time arrivals. It's the GTFS `stop_code`, which is not the same as `stop_id`. The full screen shows up to four stops; halves and quadrants show two.
+- **Stop IDs**: one to four TheRide stop numbers, separated by commas (for example `1285, 1776`). Use the stop number TheRide shows for real-time arrivals. It's the GTFS `stop_code`, which is not the same as `stop_id`. The full screen shows up to four stops; halves and quadrants show two. Each stop lists up to three routes on TRMNL X and two on TRMNL OG (the tall half-screen lists three on both), and side-by-side layouts switch to one column in portrait on TRMNL X.
 
 ## How it works
 - TRMNL polls TheRide's BusTime predictions endpoint for all stops in one request. There's no server or cron job.
