@@ -4,11 +4,12 @@
   <div class="grid grid--cols-3 gap--medium stretch-x">
     {% for p in pathogens %}
     <div class="flex flex--col flex--left gap--xsmall">
-      <span class="title title--small lg:title--base">{{ p.name }}</span>
+      <span class="title title--small lg:title--base lg:portrait:title--large">{{ p.name }}</span>
       {% if p.current %}
       <span class="value value--xsmall lg:value--large">{{ p.category }}</span>
       {% if p.level > 0 %}<div class="progress-dots progress-dots--xsmall lg:progress-dots--small"><div class="track">{% for i in (1..5) %}<div class="dot{% if i <= p.level %} dot--filled{% endif %}"></div>{% endfor %}</div></div>{% endif %}
-      <span class="label label--small lg:label--base">WVAL {{ p.wval }}</span>
+      <span class="label label--small lg:label--base lg:portrait:label--large">WVAL {{ p.wval }}</span>
+      {% if p.prev != blank %}<span class="label hidden lg:portrait:flex lg:portrait:label--large">{{ p.prev_week }}: {{ p.prev }}</span>{% endif %}
       {% elsif p.has_data %}
       <span class="label label--small">No data this week (last: {{ p.category }}, {{ p.as_of }})</span>
       {% else %}
