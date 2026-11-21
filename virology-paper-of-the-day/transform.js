@@ -51,6 +51,34 @@ function abstractExcerpt(s) {
   return (sp > 200 ? cut.slice(0, sp) : cut).replace(/[,;:.\s]+$/, "") + "…";
 }
 
+// Names for common journals, used only when a journal returned nothing (or failed) this refresh.
+var JOURNALS = {
+  "0022-538X": "J Virol", "1098-5514": "J Virol", "1553-7366": "PLoS Pathog", "1553-7374": "PLoS Pathog",
+  "2150-7511": "mBio", "0022-1317": "J Gen Virol", "1465-2099": "J Gen Virol", "2057-1577": "Virus Evol",
+  "1931-3128": "Cell Host Microbe", "1934-6069": "Cell Host Microbe", "2058-5276": "Nat Microbiol", "2948-1767": "npj Viruses"
+};
+var DEFAULT_ISSNS = "0022-538X, 1553-7366, 2150-7511, 0022-1317, 2057-1577, 1931-3128";
+// Mirrors polling_url.liquid: preprints first (unless "none"), then up to 6 ISSNs.
+function preprintMode(v) {
+  var p = String(v == null || v === "" ? "biorxiv" : v).toLowerCase().replace(/[\s_]+/g, " ").trim();
+  if (p === "none") return "";
+  if (p.indexOf("medrxiv") >= 0) return "bioRxiv + medRxiv";
+  return "bioRxiv";
+}
+function expectedSources(f) {
+  var out = [], seen = {};
+  var pre = preprintMode(f.preprints);
+  if (pre) { out.push({ key: "preprints", preprint: true, label: pre }); seen.preprints = 1; }
+  var raw = (f.journal_issns == null || f.journal_issns === "") ? DEFAULT_ISSNS : f.journal_issns;
+  String(raw).split(",").slice(0, 6).forEach(function (i) {
+    var k = i.trim().replace(/"/g, "").toUpperCase();
+    if (!k || seen[k]) return;
+    seen[k] = 1;
+    out.push({ key: k, preprint: false, label: JOURNALS[k] || "ISSN " + k });
+  });
+  return out;
+}
+
 function responses(input) {
   var keys = Object.keys(input).filter(function (k) { return /^IDX_\d+$/.test(k); })
     .sort(function (a, b) { return parseInt(a.slice(4), 10) - parseInt(b.slice(4), 10); });
@@ -93,19 +121,37 @@ function transform(input) {
   var today = nowLocal.toISOString().slice(0, 10);
   var dayNumber = Math.floor((Date.now() + offset * 1000) / 86400000);
 
-  var sources = [], errors = [];
+  // The sources this install asked for, in polling-URL order. Responses are matched to them by the
+  // query each response echoes, so a source that failed (no response, or an error body) is still
+  // known by name, and the daily rotation does not shift when Europe PMC drops a request.
+  var expected = expectedSources(f);
+  var got = {};
   responses(input).forEach(function (resp) {
     var src = describe(resp);
-    if (!src) { errors.push("A source did not respond"); return; }
+    if (src && !got[src.key]) got[src.key] = { src: src, resp: resp };
+  });
+
+  var sources = [];
+  expected.forEach(function (e) {
+    var hit = got[e.key];
+    if (!hit) { sources.push({ label: e.label, preprint: e.preprint, items: [], total: 0, failed: true }); return; }
+    var src = hit.src, resp = hit.resp;
     var rows = (resp.resultList && resp.resultList.result) || [];
     var items = rows.map(function (r) { return toItem(r, src.preprint); })
       .filter(function (i) { return i.title && i.date && i.date <= today; })
       .filter(function (i) { return !src.preprint || titleOk(i.title); });
-    // Name a journal by what Europe PMC calls it; an empty journal keeps "ISSN ...".
-    if (!src.preprint && items.length) src.label = items[0].venue;
+    // Name a journal by what Europe PMC calls it; otherwise keep the known name or "ISSN ...".
+    var label = (!src.preprint && items.length) ? items[0].venue : (e.label || src.label);
     items.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
-    sources.push({ label: src.label, preprint: src.preprint, items: items, total: parseInt(resp.hitCount, 10) || 0 });
+    sources.push({ label: label, preprint: src.preprint, items: items, total: parseInt(resp.hitCount, 10) || 0, failed: false });
   });
+  var failed = sources.filter(function (s) { return s.failed; });
+  var errors = [];
+  if (failed.length && failed.length < sources.length) {
+    errors.push(failed.length <= 2
+      ? "No answer from Europe PMC for " + failed.map(function (s) { return s.label; }).join(" and ") + " this time"
+      : "No answer from Europe PMC for " + failed.length + " of " + sources.length + " sources this time");
+  }
 
   // Rotation: today's source = day number mod source count. If that source has nothing new,
   // move on to the next source that does (and say so on screen).
@@ -118,7 +164,7 @@ function transform(input) {
       // Prefer the newest paper from before today so the pick holds steady through the day.
       featured = s.items.filter(function (i) { return i.date < today; })[0] || s.items[0];
       featuredSource = s.label;
-      if (k > 0) rotatedFrom = sources[start].label;
+      if (k > 0) rotatedFrom = sources[start].label + (sources[start].failed ? " did not respond" : " had none");
       break;
     }
   }
@@ -141,6 +187,7 @@ function transform(input) {
     also: also.map(function (i) { return { title: i.title, venue: i.venue, when: i.when, preprint: i.preprint }; }),
     sources: sources.map(function (s) { return { label: s.label, count: s.items.length, preprint: s.preprint }; }),
     source_names: sources.map(function (s) { return s.label; }).join(" · "),
+    all_failed: sources.length > 0 && failed.length === sources.length,
     lookback_days: parseInt(f.lookback_days, 10) || 30,
     errors: errors
   };
