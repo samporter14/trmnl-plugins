@@ -1,0 +1,48 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 3.4.6
+serverless_language: node
+refresh_interval_floor: '240'
+polling_url: |-
+  {%- assign p = paper | default: "sn87055779" | downcase | strip -%}
+  {%- assign y = "now" | date: "%Y" | minus: 100 -%}
+  https://raw.githubusercontent.com/samporter14/trmnl-plugins/main/hundred-years-ago/index/{{ p }}/{{ y }}.json
+polling_headers:
+polling_body:
+oauth_enabled: 'false'
+oauth_pkce_enabled: 'no'
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: news,images
+  github_url: https://github.com/samporter14
+  description: >-
+    The front page of a newspaper printed 100 years ago today, from Chronicling America at the Library
+    of Congress (loc.gov). Pick one of nine dailies with near-daily scans for 1926-1931. When there is
+    no issue for the exact date (no Sunday edition, gaps in the scans), it shows the nearest issue and
+    says so. Landscape screens show the masthead and
+    top headlines; the half vertical view shows the whole page. The page is the original scan; nothing
+    is rewritten or summarised. Unofficial; not affiliated with the Library of Congress.
+- keyname: paper
+  field_type: select
+  name: Newspaper
+  options:
+  - 'South Bend News-Times (South Bend, Ind.)': sn87055779
+  - 'The Indianapolis Times (Indianapolis, Ind.)': sn82015313
+  - 'Evening Star (Washington, D.C.)': sn83045462
+  - 'The Washington Times (Washington, D.C.)': sn84026749
+  - 'The Washington Daily News (Washington, D.C.)': sn82016181
+  - 'New Britain Herald (New Britain, Conn.)': sn82014519
+  - 'The Milwaukee Leader (Milwaukee, Wis.)': sn83045293
+  - 'The Bismarck Tribune (Bismarck, N.D.)': sn85042243
+  - 'Brownsville Herald (Brownsville, Tex.)': sn86063730
+  default: sn87055779
+  description: Dailies with scans for most days of 1926-1931 (New Britain Herald through 1930 only). Michigan has no digitized 1926 papers except one Finnish-language weekly, so the default is South Bend, just over the Michigan line.
+name: 100 Years Ago Today
+description: A front page from 100 years ago
+refresh_interval: 720

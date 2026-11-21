@@ -1,0 +1,9 @@
+{%- capture hya_icon -%}
+<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4h13v15a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z'/><path d='M17 8h3v11a2 2 0 0 1-2 2'/><path d='M7 8h7M7 12h7M7 16h4'/></svg>
+{%- endcapture -%}
+{%- assign title = trmnl.plugin_settings.instance_name | default: '100 Years Ago Today' -%}
+{%- if ok -%}
+{%- capture when_long -%}{% if exact %}100 years ago today{% else %}Nearest issue to {{ target_short }}{% endif %}{%- endcapture -%}
+{%- capture when_short -%}{% if exact %}100 years ago{% else %}Nearest to {{ target_short }}{% endif %}{%- endcapture -%}
+{%- endif -%}
+{%- capture empty_msg -%}{% if error == 'no_index' %}No front-page index for {{ target | slice: 0, 4 }} yet for this paper.{% else %}No digitized issue of this paper near {{ target_label }}.{% endif %}{%- endcapture -%}
