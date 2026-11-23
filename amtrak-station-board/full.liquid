@@ -24,11 +24,11 @@
       {% for r in upcoming %}
       <tr>
         <td><span class='label'><b>{{ r.num }}</b></span></td>
-        <td><span class='label' data-clamp='1'>{{ r.route }}{% if r.bus %} (bus){% endif %}</span></td>
-        <td><span class='label' data-clamp='1'>{{ r.to }}</span></td>
+        <td><span class='label' data-clamp='1' data-clamp-lg='2'>{{ r.route }}{% if r.bus %} (bus){% endif %}</span></td>
+        <td><span class='label' data-clamp='1' data-clamp-lg='2'>{{ r.to }}</span></td>
         <td><span class='label'>{{ r.sched }}{% if r.other_day %} {{ r.day }}{% endif %}</span></td>
         <td>{% if r.late %}<span class='label label--filled'>{{ r.est }} {{ r.delay_short }}</span>{% elsif r.ends_here and r.changed %}<span class='label'>{{ r.est }}</span>{% else %}<span class='label'>On time</span>{% endif %}</td>
-        <td><span class='label' data-clamp='1'>{{ r.status }}{% if r.platform != blank %}, track {{ r.platform }}{% endif %}</span></td>
+        <td><span class='label' data-clamp='1' data-clamp-lg='2'>{{ r.status }}{% if r.platform != blank %}, track {{ r.platform }}{% endif %}</span></td>
       </tr>
       {% endfor %}
       {% for r in departed %}

@@ -8,7 +8,7 @@
   </div>
   {% else %}
   {% for r in upcoming limit: 12 %}
-  <div class='item{% if forloop.index > 9 %} hidden lg:portrait:visible{% elsif forloop.index > 6 %} hidden lg:visible{% endif %}'>
+  <div class='item{% if forloop.index > 8 %} hidden lg:portrait:visible{% elsif forloop.index > 6 %} hidden lg:visible{% endif %}'>
     <div class='content'>
       <span class='title title--small lg:title--base' data-clamp='1'>{{ r.num }} {{ r.route }}</span>
       <span class='label label--small lg:label--base' data-clamp='1'>{% if r.ends_here %}{{ r.to }}{% else %}to {{ r.to }}{% endif %}</span>
