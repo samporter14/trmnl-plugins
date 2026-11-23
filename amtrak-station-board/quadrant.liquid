@@ -1,0 +1,23 @@
+<div class='layout layout--col layout--top layout--stretch-x gap--small'>
+  {% if error != blank %}
+  <span class='label lg:label--large'>{{ error }}</span>
+  {% elsif upcoming.size == 0 %}
+  <span class='title title--small lg:title--base'>{{ empty_msg }}</span>
+  {% for r in departed limit: 1 %}<span class='label label--small lg:label--base'>Last: {{ r.num }} {{ r.status | downcase }} {{ r.est }}</span>{% endfor %}
+  {% else %}
+  {% for r in upcoming limit: 7 %}
+  <div class='flex flex--col flex--left stretch-x{% if forloop.index > 5 %} hidden lg:portrait:visible{% elsif forloop.index > 2 %} hidden lg:visible{% endif %}'>
+    <span class='title title--small lg:title--base' data-clamp='1'>{{ r.num }} {% if r.ends_here %}{{ r.to }}{% else %}to {{ r.to }}{% endif %}</span>
+    <div class='flex flex--row flex--left gap--small'>
+      <span class='label lg:label--large'>{{ r.sched }}</span>
+      {% if r.late %}<span class='label lg:label--large label--filled'>{{ r.est }} {{ r.delay_short }}</span>{% elsif r.ends_here and r.changed %}<span class='label lg:label--large'>exp. {{ r.est }}</span>{% else %}<span class='label lg:label--large'>On time</span>{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ train_icon | base64_encode }}' />
+  <span class='title'>{{ station.code | default: 'Amtrak' }}</span>
+  <span class='instance'>{{ as_of_text }}</span>
+</div>

@@ -1,0 +1,36 @@
+<div class='layout layout--col layout--top layout--stretch-x gap--small'>
+  {% if error != blank %}
+  <span class='title title--small lg:title--base'>{{ error }}</span>
+  {% elsif upcoming.size == 0 and departed.size == 0 %}
+  <div class='flex flex--col flex--center gap--small stretch'>
+    <span class='title title--small lg:title--base'>{{ empty_msg }}</span>
+    <span class='description lg:description--large text--center'>{{ empty_help }}</span>
+  </div>
+  {% else %}
+  {% for r in upcoming limit: 12 %}
+  <div class='item{% if forloop.index > 9 %} hidden lg:portrait:visible{% elsif forloop.index > 6 %} hidden lg:visible{% endif %}'>
+    <div class='content'>
+      <span class='title title--small lg:title--base' data-clamp='1'>{{ r.num }} {{ r.route }}</span>
+      <span class='label label--small lg:label--base' data-clamp='1'>{% if r.ends_here %}{{ r.to }}{% else %}to {{ r.to }}{% endif %}</span>
+      <div class='flex flex--row flex--left gap--small'>
+        <span class='label lg:label--large'>{{ r.sched }}</span>
+        {% if r.late %}<span class='label lg:label--large label--filled'>{{ r.est }} {{ r.delay_short }}</span>{% elsif r.ends_here and r.changed %}<span class='label lg:label--large'>exp. {{ r.est }}</span>{% else %}<span class='label lg:label--large'>On time</span>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% if upcoming.size < 6 %}{% for r in departed limit: 1 %}
+  <div class='item'>
+    <div class='content'>
+      <span class='title title--small lg:title--base label--gray 1bit:text--black 2bit:text--gray-30' data-clamp='1'>{{ r.num }} {{ r.route }}</span>
+      <span class='label label--small lg:label--base label--gray 1bit:text--black 2bit:text--gray-30' data-clamp='1'>{{ r.status }} {{ r.est }}{% if r.late %}, {{ r.delay_text }}{% endif %}</span>
+    </div>
+  </div>
+  {% endfor %}{% endif %}
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ train_icon | base64_encode }}' />
+  <span class='title'>{{ station.code | default: 'Amtrak' }}</span>
+  <span class='instance'>{{ as_of_text }}</span>
+</div>

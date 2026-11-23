@@ -1,0 +1,54 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 3.4.6
+serverless_language: node
+refresh_interval_floor: '15'
+polling_url: |-
+  https://api-v3.amtraker.com/v3/stations/{{ station | default: 'ARB' | strip | upcase }}
+polling_headers:
+polling_body:
+name: Amtrak Station Board
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: travel
+  github_url: https://github.com/samporter14
+  description: >-
+    Upcoming Amtrak trains at any station you choose, with scheduled and expected times and how late each train is.
+    Data from Amtraker (amtraker.com), an unofficial community API built on Amtrak's public train map.
+    A train appears once Amtrak is tracking it (running, or about to leave its first station), so trains later in the day
+    show up closer to their time. Times are as Amtrak reports them; the screen can lag by up to your refresh interval.
+    Unofficial; not affiliated with Amtrak.
+- keyname: station
+  field_type: string
+  name: Station code
+  default: ARB
+  placeholder: ARB
+  description: The 3-letter Amtrak station code, e.g. ARB (Ann Arbor), CHI (Chicago Union), NYP (New York Penn). Find codes at amtrak.com or amtraker.com.
+- keyname: show_departed
+  field_type: select
+  name: Recently departed trains
+  options:
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  default: '1'
+  description: How many trains that left in the last 3 hours to show under the upcoming ones.
+- keyname: time_format
+  field_type: select
+  name: Time format
+  options:
+  - 12-hour
+  - 24-hour
+  default: 12-hour
+- keyname: buses
+  field_type: boolean
+  name: Thruway buses
+  default: false
+  description: Include Amtrak Thruway bus connections that stop at this station.
