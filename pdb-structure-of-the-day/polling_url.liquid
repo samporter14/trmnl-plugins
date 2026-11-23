@@ -1,6 +1,6 @@
 {%- assign focus = focus | default: "all" | downcase -%}
 {%- capture q -%}{"query":{"type":"group","logical_operator":"and","nodes":[{"type":"terminal","service":"text","parameters":{"attribute":"rcsb_accession_info.initial_release_date","operator":"range","value":{"from":"now-1w","include_lower":false,"to":"now","include_upper":true}}}{%- if focus contains "virus" -%},{"type":"terminal","service":"text","parameters":{"attribute":"rcsb_entity_source_organism.taxonomy_lineage.name","operator":"exact_match","value":"Viruses"}}{%- endif -%}{%- assign pp = published_only | default: "any" | downcase -%}{%- if pp contains "paper" -%},{"type":"terminal","service":"text","parameters":{"attribute":"rcsb_primary_citation.journal_abbrev","operator":"exact_match","value":"To Be Published","negation":true}}{%- endif -%}]},"return_type":"entry","request_options":{"paginate":{"start":0,"rows":1000},"sort":[{"sort_by":"rcsb_entry_container_identifiers.entry_id","direction":"asc"}]}}{%- endcapture %}
 https://search.rcsb.org/rcsbsearch/v2/query?json={{ q | url_encode }}
-{%- assign motm = show_motm | default: "yes" | downcase -%}{%- if motm == "yes" %}
+{%- assign motm = show_motm | append: "" | downcase -%}{%- unless motm == "false" or motm == "no" %}
 https://pdb101.rcsb.org/motm/rss.xml
-{%- endif -%}
+{%- endunless -%}

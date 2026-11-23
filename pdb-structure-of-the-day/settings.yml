@@ -35,10 +35,7 @@ custom_fields:
   default: Any
   description: Many new entries are released before their paper ("To be published"). Choose the second option to skip those.
 - keyname: show_motm
-  field_type: select
+  field_type: boolean
   name: Molecule of the Month
-  options:
-  - 'Yes'
-  - 'No'
-  default: 'Yes'
+  default: true
   description: Show the title of the current PDB-101 Molecule of the Month on the full screen.
