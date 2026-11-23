@@ -18,6 +18,7 @@ None of these plugins need an API key or an account.
 | [PDB Structure of the Day](pdb-structure-of-the-day/) | One structure a day from the latest weekly Protein Data Bank release | Coming soon |
 | [Art Forms in Nature](art-forms-in-nature/) | A plate from Ernst Haeckel's *Kunstformen der Natur* with a short natural history note | Coming soon |
 | [100 Years Ago Today](hundred-years-ago/) | The front page of a newspaper printed 100 years ago today, from the Library of Congress's Chronicling America | Not published |
+| [Amtrak Station Board](amtrak-station-board/) | Upcoming Amtrak trains at any station, with scheduled and expected times, via the unofficial Amtraker API | Not published |
 
 Recipe links will be added here once TRMNL lists each one in its public directory. Until then you can rebuild a plugin by hand: create a private plugin on trmnl.com and paste in the files, or use TRMNL's plugin import.
 
@@ -25,7 +26,7 @@ Recipe links will be added here once TRMNL lists each one in its public director
 
 Pick **Install** on a recipe to get updates, or **Fork** to change it. The code here is the same as what each recipe runs.
 
-These plugins are unofficial. They are not affiliated with or endorsed by TRMNL, AAATA/TheRide, CDC, Europe PMC, RCSB PDB, Wikimedia or the Library of Congress. Each data source keeps its own terms; see the plugin's README.
+These plugins are unofficial. They are not affiliated with or endorsed by TRMNL, AAATA/TheRide, CDC, Europe PMC, RCSB PDB, Wikimedia, the Library of Congress, Amtrak or Amtraker. Each data source keeps its own terms; see the plugin's README.
 
 ## Issues
 

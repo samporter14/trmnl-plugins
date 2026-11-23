@@ -1,0 +1,7 @@
+{%- capture train_icon -%}
+<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='3' width='14' height='14' rx='3'/><path d='M5 11h14'/><path d='M9 3v8M15 3v8'/><circle cx='9' cy='14' r='0.6'/><circle cx='15' cy='14' r='0.6'/><path d='M8 17l-2 4M16 17l2 4'/></svg>
+{%- endcapture -%}
+{%- if station.name != blank -%}{%- capture board_title -%}{{ station.name }} ({{ station.code }}){%- endcapture -%}{%- else -%}{%- assign board_title = trmnl.plugin_settings.instance_name | default: 'Amtrak Station Board' -%}{%- endif -%}
+{%- capture as_of_text -%}{% if as_of != blank %}As of {{ as_of }}{% endif %}{%- endcapture -%}
+{%- capture empty_msg -%}No trains tracked at {{ station.name | default: station.code }} right now{%- endcapture -%}
+{%- assign empty_help = 'Amtrak lists a train once it is running or about to leave its first station. Later trains appear closer to their time.' -%}

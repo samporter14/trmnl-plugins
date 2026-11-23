@@ -1,0 +1,53 @@
+<div class='layout layout--col layout--top layout--stretch-x gap--small'>
+  {% if error != blank %}
+  <div class='flex flex--col flex--center gap--small stretch'>
+    <span class='title text--center'>{{ error }}</span>
+  </div>
+  {% elsif upcoming.size == 0 and departed.size == 0 %}
+  <div class='flex flex--col flex--center gap--small stretch'>
+    <span class='title lg:title--large'>{{ empty_msg }}</span>
+    <span class='description description--large lg:description--xlarge text--center'>{{ empty_help }}</span>
+  </div>
+  {% else %}
+  <table class='table table--base lg:table--large' data-table-limit='true'>
+    <thead>
+      <tr>
+        <th class='w--[64px] lg:w--[88px]'><span class='title title--small'>Train</span></th>
+        <th><span class='title title--small'>Route</span></th>
+        <th><span class='title title--small'>To / from</span></th>
+        <th><span class='title title--small'>Sched</span></th>
+        <th><span class='title title--small'>Expected</span></th>
+        <th><span class='title title--small'>Status</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in upcoming %}
+      <tr>
+        <td><span class='label'><b>{{ r.num }}</b></span></td>
+        <td><span class='label' data-clamp='1'>{{ r.route }}{% if r.bus %} (bus){% endif %}</span></td>
+        <td><span class='label' data-clamp='1'>{{ r.to }}</span></td>
+        <td><span class='label'>{{ r.sched }}{% if r.other_day %} {{ r.day }}{% endif %}</span></td>
+        <td>{% if r.late %}<span class='label label--filled'>{{ r.est }} {{ r.delay_short }}</span>{% elsif r.ends_here and r.changed %}<span class='label'>{{ r.est }}</span>{% else %}<span class='label'>On time</span>{% endif %}</td>
+        <td><span class='label' data-clamp='1'>{{ r.status }}{% if r.platform != blank %}, track {{ r.platform }}{% endif %}</span></td>
+      </tr>
+      {% endfor %}
+      {% for r in departed %}
+      <tr>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30'><b>{{ r.num }}</b></span></td>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30' data-clamp='1'>{{ r.route }}</span></td>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30' data-clamp='1'>{{ r.to }}</span></td>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30'>{{ r.sched }}</span></td>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30'>{{ r.est }}</span></td>
+        <td><span class='label label--gray 1bit:text--black 2bit:text--gray-30' data-clamp='1'>{{ r.status }}{% if r.late %}, {{ r.delay_text }}{% endif %}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if upcoming.size == 0 %}<span class='description'>No more tracked trains due. {{ empty_help }}</span>{% endif %}
+  {% endif %}
+</div>
+<div class='title_bar'>
+  <img class='image' src='data:image/svg+xml;base64,{{ train_icon | base64_encode }}' />
+  <span class='title'>{{ board_title }}</span>
+  <span class='instance'>{% if as_of_text != blank %}{{ as_of_text }} · {% endif %}Amtraker</span>
+</div>
