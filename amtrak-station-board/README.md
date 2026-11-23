@@ -23,9 +23,9 @@ More previews: [TRMNL OG](previews/og-full-local.png), [TRMNL OG 2-bit (Ann Arbo
 - Amtraker is unofficial, has no published rate limit, and could change without notice. An unknown station code shows an error screen.
 
 ## Layouts
-- **full**: table of Train, Route, To / from, Sched, Expected and Status; the framework adds "and N more" when it overflows.
+- **full**: table of Train, Route, To / from, Sched, Expected and Status; the framework adds "and N more" when it overflows. On the TRMNL X, long route, destination and status text wraps to two lines instead of being cut.
 - **half_horizontal**: the same table without Status.
-- **half_vertical**: 6 trains on the TRMNL OG, 9 on the TRMNL X in landscape, 12 in portrait.
+- **half_vertical**: 6 trains on the TRMNL OG, 8 on the TRMNL X in landscape, 12 in portrait.
 - **quadrant**: the next 2 trains on the OG, 5 on the X in landscape, 7 in portrait.
 
 Unofficial; not affiliated with Amtrak or Amtraker.
